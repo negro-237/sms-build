@@ -9,9 +9,12 @@ use App\Repositories\{ SenderRepository, MessageRepository, TransactionRepositor
 use App\Http\Requests\MessageRequest;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Traits\SMSTrait;
 
 class MessageController extends Controller
 {
+    use SMSTrait;
+
     /** @var MessageRepository */
     private $messageRepository;
     private $senderRepository;
@@ -62,15 +65,16 @@ class MessageController extends Controller
 
         foreach($request->phones as $phone) {
             if($phone) {
-                $this->trxRepository->create([
+                $this->envoiSMS($phone, $request->message, $campaign->id, $sender->name, $request->user()->account->id);
+                /* $this->trxRepository->create([
                     'campaign_id' => $campaign->id,
                     'phone' => $phone,
-                ]);
+                ]); */
             }
         }
 
-        $account = $this->accountRepository->find($sender->account->id);
-        $account->decrement('sms', $request->total);
+        /* $account = $this->accountRepository->find($sender->account->id);
+        $account->decrement('sms', $request->total); */
 
         return to_route('messages.index', ['type' => $request->type])->with('success', 'Opération réussie !');
 

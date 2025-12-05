@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('credits', function (Blueprint $table) {
-            $table->boolean('is_pending')->default(true);
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->boolean('status')->default(false);
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('credits', function (Blueprint $table) {
-            $table->dropColumn('is_pending');
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->dropColumn('status');
         });
     }
 };

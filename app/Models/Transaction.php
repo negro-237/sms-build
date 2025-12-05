@@ -9,7 +9,8 @@ class Transaction extends Model
 {
     protected $fillable = [
         'campaign_id',
-        'phone'
+        'phone',
+        'status'
     ];
 
     protected function casts(): array
@@ -17,6 +18,7 @@ class Transaction extends Model
         return [
             'campaign_id' => 'integer',
             'phone' => 'string',
+            'status' => 'boolean'
         ];
     }
 
